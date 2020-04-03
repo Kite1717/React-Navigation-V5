@@ -1,114 +1,106 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import * as React from 'react';
+import {StyleSheet,Text, View,SafeAreaView,Image} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+//create custom header
+function CustomHeader({title}) { // I sent the title as a props
+  return(
+    <View style = {styles.customHeaderContainer}>
+      <View style = {[styles.cellContainer , {flex : 1}]}>
+        <Image
+         style = {styles.icon}
+         source = {require('./src/assets/icons/menu.png')}
+         resizeMode = 'contain'
+        />
+      </View>
 
-const App: () => React$Node = () => {
+      <View style = {[styles.cellContainer , {flex : 1.5}]}>
+        <Text style ={styles.text}>{title}</Text>
+      </View>
+      <View style = {[styles.cellContainer , {flex : 1}]}></View>
+    </View>
+  )
+
+}
+
+function HomeScreen() {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={{ flex: 1 }}>
+      <CustomHeader title={'Home'}/>
+      <View style = {styles.textContainer}>
+        <Text>Home!</Text>
+      </View>
+    </SafeAreaView>
   );
-};
+}
+
+function SettingsScreen() {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <CustomHeader title={'Settings'}/>
+      <View style = {styles.textContainer}>
+        <Text>Settings</Text>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+//Minimal example of tab-based navigation
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+
+
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
-export default App;
+  customHeaderContainer : {
+    flexDirection : 'row',
+    height : 50,
+
+    //activate the title you want to edit
+    //borderWidth : 1,
+    //borderColor : 'red',
+
+  },
+  textContainer : {
+    flex : 1,
+    justifyContent : 'center',
+    alignItems : 'center',
+  },
+  cellContainer : {
+    flex : 1,
+    justifyContent: 'center',
+
+    //activate the title you want to edit
+    //borderWidth:  1,
+    //borderColor: 'red',
+
+
+  },
+  text :{
+    textAlign : 'center',
+  },
+  icon : {
+    width : 20,
+    height:  20,
+    marginLeft : 5,
+
+  }
+
+
+
+
+
+});
