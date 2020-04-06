@@ -129,12 +129,48 @@ function NotificationsScreen({ navigation }) {
   );
 }
 
+//handle login and register screens
+function RegisterScreen({navigation}) {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <CustomHeader title={'Register'} navigation={navigation}/>
+      <View style = {styles.textContainer}>
+        <Text>Register Screen !</Text>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function LoginScreen({navigation}) {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style = {styles.textContainer}>
+        <Text>Login Screen!</Text>
+        <TouchableOpacity
+          onPress = { () => {navigation.navigate('HomeApp')}}
+          style = {styles.detailButton}
+        >
+          <Text>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress = { () => {navigation.navigate('Register')}}
+          style = {styles.detailButton}
+        >
+          <Text>Register</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+
 /**Navigations**/
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 // separate stack should be produced for each page
 const StackHome = createStackNavigator();
 const StackSetting = createStackNavigator();
+const StackApp = createStackNavigator();
 
 
 
@@ -206,6 +242,18 @@ function TabNavigator() {
   )
 }
 
+/**Drawer Navigator**/
+function DrawerNavigator() {
+  return(
+    <Drawer.Navigator initialRouteName="MenuTab"
+      // create custom slide menu
+                      drawerContent = { props =>(CustomDrawerContent(props))}
+    >
+      <Drawer.Screen name="MenuTab" component={TabNavigator} />
+      <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+    </Drawer.Navigator>
+  )
+}
 /**Navigation Options**/
 // Must be added to all components in the stack
 //to destroy the default header
@@ -214,7 +262,7 @@ const navOptionHandler = () => ({
   headerShown : false,  // we closed the default header
 });
 
-//create custom drawer
+/**Custom Drawer Content**/
 function CustomDrawerContent({props,navigation}) {
 
   return(
@@ -254,13 +302,11 @@ function CustomDrawerContent({props,navigation}) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="MenuTab"
-       // create custom slide menu
-        drawerContent = { props =>(CustomDrawerContent(props))}
-      >
-        <Drawer.Screen name="MenuTab" component={TabNavigator} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      </Drawer.Navigator>
+      <StackApp.Navigator initialRouteName = 'Login'>
+        <StackApp.Screen  name='HomeApp' component = {DrawerNavigator} options={navOptionHandler}/>
+        <StackApp.Screen  name='Login' component = {LoginScreen} options={navOptionHandler}/>
+        <StackApp.Screen  name='Register' component = {RegisterScreen} options={navOptionHandler}/>
+      </StackApp.Navigator>
     </NavigationContainer>
   );
 }
