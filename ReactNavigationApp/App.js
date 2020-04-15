@@ -8,160 +8,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 //Handle Stack Navigator
 import {createStackNavigator} from '@react-navigation/stack';
 
+import {CustomHeader,CustomDrawerContent} from './src';
+import {HomeScreen , HomeScreenDetail ,SettingsScreen,SettingsScreenDetail } from './src/tab';
+
+import {NotificationsScreen} from './src/drawer';
+
+import {RegisterScreen , LoginScreen} from './src/auth';
 
 
-/**HEADER**/
-//create custom header
-function CustomHeader({title,isHome,navigation}) { // I sent the title as a props
-  return(
-
-    //****boolean default value false****
-
-    <View style = {styles.customHeaderContainer}>
-      <View style = {[styles.cellContainer , {flex : 1}]}>
-      {
-        // handle button back
-        // header will appear on the main page
-        // otherwise the back button will appear
-        isHome ?
-          <TouchableOpacity  // handle menu icon for open drawer navigator
-            onPress = {() => navigation.openDrawer()}
-          >
-
-            <Image
-              style = {styles.icon}
-              source = {require('./src/assets/icons/menu.png')}
-              resizeMode = 'contain'
-            />
-          </TouchableOpacity>
-          :
-          <TouchableOpacity
-            style ={styles.backButtonContainer}
-            onPress = {() => navigation.goBack()}
-          >
-            <Image
-              style = {styles.icon}
-              source = {require('./src/assets/icons/back.png')}
-              resizeMode = 'contain'
-            />
-            <Text style ={{marginLeft: 5}}>Back</Text>
-          </TouchableOpacity>
-      }
-
-      </View>
-      <View style = {[styles.cellContainer , {flex : 1.5}]}>
-        <Text style ={styles.text}>{title}</Text>
-      </View>
-      <View style = {[styles.cellContainer , {flex : 1}]}></View>
-    </View>
-  )
-
-}
-
-/**Screens**/
-function HomeScreen({navigation}) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Home'} isHome={true} navigation={navigation}/>
-      <View style = {styles.textContainer}>
-        <Text>Home!</Text>
-        {/* create screen detail*/}
-        <TouchableOpacity
-         style = {styles.detailButton}
-          // handle go to detail (Do not forget how you registered in which name parameter) name = 'HomeDetail'
-         onPress = { () => {navigation.navigate('HomeDetail')}}
-        >
-          <Text>Go Home detail</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-function HomeScreenDetail({navigation}) { // navigation for goBack method
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Home Detail'} navigation={navigation} />
-      <View style = {styles.textContainer}>
-        <Text>Home detail :)</Text>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-function SettingsScreen({navigation}) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Setting'} isHome={true} navigation={navigation}/>
-      <View style = {styles.textContainer}>
-        <Text>Settings!</Text>
-        <TouchableOpacity
-          onPress = { () => {navigation.navigate('SettingDetail')}}
-          style = {styles.detailButton}
-        >
-          <Text>Go Setting detail</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
-}
 
 
-function SettingsScreenDetail({navigation}) { // navigation for goBack method
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Setting Detail'} navigation={navigation}/>
-      <View style = {styles.textContainer}>
-        <Text>Setting Detail :)</Text>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Notification'} navigation={navigation}/>
-      <View style = {styles.textContainer}>
-        <Text>Notification Screen !</Text>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-//handle login and register screens
-function RegisterScreen({navigation}) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title={'Register'} navigation={navigation}/>
-      <View style = {styles.textContainer}>
-        <Text>Register Screen !</Text>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-function LoginScreen({navigation}) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style = {styles.textContainer}>
-        <Text>Login Screen!</Text>
-        <TouchableOpacity
-          onPress = { () => {navigation.navigate('HomeApp')}}
-          style = {styles.detailButton}
-        >
-          <Text>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress = { () => {navigation.navigate('Register')}}
-          style = {styles.detailButton}
-        >
-          <Text>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
-}
 
 
 /**Navigations**/
@@ -201,44 +57,44 @@ function SettingStack() {
 function TabNavigator() {
 
   return(
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+  <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused
-              ? require('./src/assets/icons/home-white.png')
-              : require('./src/assets/icons/home-black.png')
-          } else if (route.name === 'Settings') {
-            iconName = focused
-              ?  require('./src/assets/icons/settings-white.png')
-              :  require('./src/assets/icons/settings-black.png')
-          }
+            if (route.name === 'Home') {
+              iconName = focused
+                ? require('./src/assets/icons/home-white.png')
+                : require('./src/assets/icons/home-black.png')
+            } else if (route.name === 'Settings') {
+              iconName = focused
+                ?  require('./src/assets/icons/settings-white.png')
+                :  require('./src/assets/icons/settings-black.png')
+            }
 
-          // You can return any component that you like here!
-          return <Image
-            source={iconName}
-            style={styles.tabIcon}
-            resizeMode = 'contain'
-          />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'red',
-        inactiveTintColor: 'black',
-      }}
-    >
+            // You can return any component that you like here!
+            return <Image
+              source={iconName}
+              style={styles.tabIcon}
+              resizeMode = 'contain'
+            />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'red',
+          inactiveTintColor: 'black',
+        }}
+      >
 
-      {/*now we will put the stacks we created
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} /> */}
+        {/*now we will put the stacks we created
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} /> */}
 
-      {/* we have two header these are default header from StackNavigation and my custom header */}
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Settings" component={SettingStack} />
+        {/* we have two header these are default header from StackNavigation and my custom header */}
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="Settings" component={SettingStack} />
 
-    </Tab.Navigator>
+  </Tab.Navigator>
   )
 }
 
@@ -262,40 +118,6 @@ const navOptionHandler = () => ({
   headerShown : false,  // we closed the default header
 });
 
-/**Custom Drawer Content**/
-function CustomDrawerContent({props,navigation}) {
-
-  return(
-    <SafeAreaView style = {styles.drawerContentContainer}>
-      <View style = {styles.profileContainer}>
-
-        <Image
-          source = {require('./src/assets/icons/profile.png')}
-          style = {styles.profileIcon}
-          resizeMode = 'contain'
-        />
-      </View>
-     <ScrollView style = {styles.scrollContainer}>
-       <TouchableOpacity
-         style = {styles.detailButton}
-         onPress ={() => navigation.navigate('MenuTab')}
-
-       >
-       <Text>Menu Tab</Text>
-       </TouchableOpacity>
-
-       <TouchableOpacity
-         style = {styles.detailButton}
-         onPress ={() => navigation.navigate('Notifications')}
-
-       >
-         <Text>Notification</Text>
-       </TouchableOpacity>
-     </ScrollView>
-    </SafeAreaView>
-  )
-
-}
 
 /**MAIN**/
 //Minimal example of tab-based navigation
