@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 
-export default class  extends Component {
+import styles from '../styles/style';
+
+
+export  class LoginScreen extends Component {
   render() {
     return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style = {styles.textContainer}>
 					<Text>Login Screen!</Text>
 					<TouchableOpacity
-						onPress = { () => {navigation.navigate('HomeApp')}}
+						onPress = { () => {this.props.navigation.navigate('HomeApp')}}
 						style = {styles.detailButton}
 					>
 						<Text>Login</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress = { () => {navigation.navigate('Register')}}
+						onPress = { () => {this.props.navigation.navigate('Register')}}
 						style = {styles.detailButton}
 					>
 						<Text>Register</Text>
@@ -25,4 +28,3 @@ export default class  extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
