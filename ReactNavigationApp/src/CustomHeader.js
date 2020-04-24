@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 
+import {IMAGE} from './constants/Image';
+import styles from './styles/style';
 /**HEADER**/
-export default class CustomHeader extends Component { // I sent the title as a props
+export  class CustomHeader extends Component { // I sent the title as a props
 	//****boolean default value false****
   render() {
+  	let  {navigation ,isHome,title } = this.props
     return (
 			<View style = {styles.customHeaderContainer}>
 				<View style = {[styles.cellContainer , {flex : 1}]}>
@@ -12,25 +15,25 @@ export default class CustomHeader extends Component { // I sent the title as a p
 						// handle button back
 						// header will appear on the main page
 						// otherwise the back button will appear
-						isHome ?
+					     isHome ?
 							<TouchableOpacity  // handle menu icon for open drawer navigator
 								onPress = {() => navigation.openDrawer()}
 							>
 
 								<Image
 									style = {styles.icon}
-									source = {require('./src/assets/icons/menu.png')}
+									source = {IMAGE.ICON_MENU}
 									resizeMode = 'contain'
 								/>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity
 								style ={styles.backButtonContainer}
-								onPress = {() => navigation.goBack()}
+								onPress = {() =>navigation.goBack()}
 							>
 								<Image
 									style = {styles.icon}
-									source = {require('./src/assets/icons/back.png')}
+									source = {IMAGE.ICON_BACK}
 									resizeMode = 'contain'
 								/>
 								<Text style ={{marginLeft: 5}}>Back</Text>
@@ -47,70 +50,4 @@ export default class CustomHeader extends Component { // I sent the title as a p
   }
 }
 
-const styles = StyleSheet.create({
 
-	customHeaderContainer : {
-		flexDirection : 'row',
-		height : 50,
-
-		//activate the title you want to edit
-		//borderWidth : 1,
-		//borderColor : 'red',
-
-	},
-	textContainer : {
-		flex : 1,
-		justifyContent : 'center',
-		alignItems : 'center',
-	},
-	cellContainer : {
-		flex : 1,
-		justifyContent: 'center',
-
-		//activate the title you want to edit
-		//borderWidth:  1,
-		//borderColor: 'red',
-
-
-	},
-	text :{
-		textAlign : 'center',
-	},
-	icon : {
-		width : 20,
-		height:  20,
-		marginLeft : 5,
-
-	},
-	detailButton : {
-
-		marginTop : 20,
-	},
-	backButtonContainer : {
-		flexDirection: 'row',
-		alignItems:  'center',
-
-	},
-	tabIcon :{
-		width: 20,
-		height : 20,
-	},
-	drawerContentContainer :{
-		flex : 1,
-
-	},
-	scrollContainer : {
-		marginLeft:  5,
-	},
-	profileContainer : {
-
-		height :150,
-		justifyContent :'center',
-		alignItems : 'center',
-	},
-	profileIcon :{
-		height : 120,
-		width : 120,
-		borderRadius : 60,
-	}
-});

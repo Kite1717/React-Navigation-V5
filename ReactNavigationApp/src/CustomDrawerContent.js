@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import {Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
-export default class  extends Component {
+import {IMAGE} from "./constants/Image";
+import styles from './styles/style';
+export  class CustomDrawerContent extends Component {
   render() {
     return (
 			<SafeAreaView style = {styles.drawerContentContainer}>
 				<View style = {styles.profileContainer}>
 
 					<Image
-						source = {require('./src/assets/icons/profile.png')}
+						source = {IMAGE.ICON_PROFILE}
 						style = {styles.profileIcon}
 						resizeMode = 'contain'
 					/>
@@ -16,7 +18,7 @@ export default class  extends Component {
 				<ScrollView style = {styles.scrollContainer}>
 					<TouchableOpacity
 						style = {styles.detailButton}
-						onPress ={() => navigation.navigate('MenuTab')}
+						onPress ={() => this.props.navigation.navigate('MenuTab')}
 
 					>
 						<Text>Menu Tab</Text>
@@ -24,12 +26,21 @@ export default class  extends Component {
 
 					<TouchableOpacity
 						style = {styles.detailButton}
-						onPress ={() => navigation.navigate('Notifications')}
+						onPress ={() => this.props.navigation.navigate('Notifications')}
 
 					>
 						<Text>Notification</Text>
 					</TouchableOpacity>
 				</ScrollView>
+
+				{/* handle log out*/}
+				<TouchableOpacity
+					style = {styles.logoutButton }
+					onPress ={() => this.props.navigation.navigate('Login')}
+
+				>
+					<Text>Logout</Text>
+				</TouchableOpacity>
 			</SafeAreaView>
     );
   }
