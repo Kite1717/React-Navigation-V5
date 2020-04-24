@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet,Text, View,SafeAreaView,Image,TouchableOpacity,ScrollView} from 'react-native';
+import {Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -8,13 +8,25 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 //Handle Stack Navigator
 import {createStackNavigator} from '@react-navigation/stack';
 
+//header and drawer content
 import {CustomHeader,CustomDrawerContent} from './src';
+
+//tab screens
 import {HomeScreen , HomeScreenDetail ,SettingsScreen,SettingsScreenDetail } from './src/tab';
 
+//drawer screen
 import {NotificationsScreen} from './src/drawer';
 
+//auth screens
 import {RegisterScreen , LoginScreen} from './src/auth';
 
+
+//constants
+import {IMAGE} from './src/constants/Image';
+
+//styles
+
+import styles from './src/styles/style';
 
 
 
@@ -64,12 +76,12 @@ function TabNavigator() {
 
             if (route.name === 'Home') {
               iconName = focused
-                ? require('./src/assets/icons/home-white.png')
-                : require('./src/assets/icons/home-black.png')
+                ? IMAGE.ICON_HOME_WHITE
+                : IMAGE.ICON_HOME_BLACK
             } else if (route.name === 'Settings') {
               iconName = focused
-                ?  require('./src/assets/icons/settings-white.png')
-                :  require('./src/assets/icons/settings-black.png')
+                ?  IMAGE.ICON_SETTING_WHITE
+                :  IMAGE.ICON_SETTING_BLACK
             }
 
             // You can return any component that you like here!
@@ -99,14 +111,14 @@ function TabNavigator() {
 }
 
 /**Drawer Navigator**/
-function DrawerNavigator() {
+function DrawerNavigator({navigation}) {
   return(
     <Drawer.Navigator initialRouteName="MenuTab"
       // create custom slide menu
-                      drawerContent = { props =>(CustomDrawerContent(props))}
+                      drawerContent = { () => <CustomDrawerContent navigation ={navigation}/>}
     >
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
-      <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      <Drawer.Screen name="Notifications" component={NotificationsScreen } />
     </Drawer.Navigator>
   )
 }
@@ -133,70 +145,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-
-  customHeaderContainer : {
-    flexDirection : 'row',
-    height : 50,
-
-    //activate the title you want to edit
-    //borderWidth : 1,
-    //borderColor : 'red',
-
-  },
-  textContainer : {
-    flex : 1,
-    justifyContent : 'center',
-    alignItems : 'center',
-  },
-  cellContainer : {
-    flex : 1,
-    justifyContent: 'center',
-
-    //activate the title you want to edit
-    //borderWidth:  1,
-    //borderColor: 'red',
-
-
-  },
-  text :{
-    textAlign : 'center',
-  },
-  icon : {
-    width : 20,
-    height:  20,
-    marginLeft : 5,
-
-  },
-  detailButton : {
-
-    marginTop : 20,
-  },
-  backButtonContainer : {
-    flexDirection: 'row',
-    alignItems:  'center',
-
-  },
-  tabIcon :{
-    width: 20,
-    height : 20,
-  },
-  drawerContentContainer :{
-    flex : 1,
-
-  },
-  scrollContainer : {
-    marginLeft:  5,
-  },
-  profileContainer : {
-
-    height :150,
-    justifyContent :'center',
-    alignItems : 'center',
-  },
-  profileIcon :{
-    height : 120,
-    width : 120,
-    borderRadius : 60,
-  }
-});
