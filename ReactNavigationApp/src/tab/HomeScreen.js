@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 
 import {CustomHeader} from '../index';
+import styles from '../styles/style';
 
-export default class HomeScreen extends Component {
+import {RVText} from '../core';
+
+export  class HomeScreen extends Component {
   render() {
     return (
 			<SafeAreaView style={{ flex: 1 }}>
-				<CustomHeader title={'Home'} isHome={true} navigation={navigation}/>
+				<CustomHeader title={'Home'} isHome={true} navigation={this.props.navigation}/>
 				<View style = {styles.textContainer}>
-					<Text>Home!</Text>
+					<RVText content = "Home!"/>
 					{/* create screen detail*/}
 					<TouchableOpacity
 						style = {styles.detailButton}
 						// handle go to detail (Do not forget how you registered in which name parameter) name = 'HomeDetail'
-						onPress = { () => {navigation.navigate('HomeDetail')}}
+						onPress = { () => {this.props.navigation.navigate('HomeDetail')}}
 					>
-						<Text>Go Home detail</Text>
+						<RVText  /* it can be override*/ style ={{fontSize : 22}} content = "Go Home detail"/>
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
@@ -24,4 +27,3 @@ export default class HomeScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({});

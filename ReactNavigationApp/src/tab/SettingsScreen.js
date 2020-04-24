@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 
 import {CustomHeader} from '../index';
+import styles from '../styles/style';
 
-export default class SettingsScreen extends Component {
+import {RVText} from '../core';
+
+export  class SettingsScreen extends Component {
   render() {
     return (
 			<SafeAreaView style={{ flex: 1 }}>
-				<CustomHeader title={'Setting'} isHome={true} navigation={navigation}/>
+				<CustomHeader title={'Setting'} isHome={true} navigation={this.props.navigation}/>
 				<View style = {styles.textContainer}>
-					<Text>Settings!</Text>
+					<RVText content = "Settings!"/>
 					<TouchableOpacity
-						onPress = { () => {navigation.navigate('SettingDetail')}}
+						onPress = { () => {this.props.navigation.navigate('SettingDetail')}}
 						style = {styles.detailButton}
 					>
-						<Text>Go Setting detail</Text>
+						<RVText  /* it can be override*/ style = {{fontSize : 24}} content = "Go Setting detail"/>
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
@@ -22,4 +25,3 @@ export default class SettingsScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
